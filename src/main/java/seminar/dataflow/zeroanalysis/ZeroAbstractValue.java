@@ -51,8 +51,17 @@ public enum ZeroAbstractValue {
      * @return the result of the addition.
      */
     public ZeroAbstractValue add(ZeroAbstractValue another) {
-          // TODO: IMPLEMENT
-          throw new UnsupportedOperationException();
+        if(this==BOTTOM||another==BOTTOM)
+            return BOTTOM;
+        if(this==TOP||another==TOP)
+            return TOP;
+        if(this==ZERO)
+            return another;
+        if(another==ZERO)
+            return this;
+        if(this==another)
+            return this;
+        return TOP;
     }
 
     /**
@@ -61,8 +70,14 @@ public enum ZeroAbstractValue {
      * @return the result of the division.
      */
     public ZeroAbstractValue divideBy(ZeroAbstractValue another) {
-        // TODO: IMPLEMENT
-        throw new UnsupportedOperationException();
+        if(this==BOTTOM||another==BOTTOM)
+            return BOTTOM;
+        // Division by zero has no result.
+        if(another==ZERO)
+            return BOTTOM;
+        if(this==ZERO)
+            return ZERO;
+        return TOP;
     }
 
     /**
@@ -71,8 +86,15 @@ public enum ZeroAbstractValue {
      * @return the result of the multiplication.
      */
     public ZeroAbstractValue multiplyBy(ZeroAbstractValue another) {
-        // TODO: IMPLEMENT
-        throw new UnsupportedOperationException();
+        if(this==BOTTOM||another==BOTTOM)
+            return BOTTOM;
+        if(this==ZERO||another==ZERO)
+            return ZERO;
+        if(this==TOP||another==TOP)
+            return TOP;
+        if(this==another)
+            return POSITIVE;
+        return NEGATIVE;
     }
 
     /**
@@ -81,8 +103,24 @@ public enum ZeroAbstractValue {
      * @return the result of the subtraction.
      */
     public ZeroAbstractValue substract(ZeroAbstractValue another) {
-        // TODO: IMPLEMENT
-        throw new UnsupportedOperationException();
+        if(this==BOTTOM||another==BOTTOM)
+            return BOTTOM;
+        if(this==TOP||another==TOP)
+            return TOP;
+        if(this==ZERO){
+            if(another==NEGATIVE)
+                return POSITIVE;
+            if(another==POSITIVE)
+                return NEGATIVE;
+            return ZERO;
+        }
+        if(another==ZERO)
+            return this;
+        if(this==NEGATIVE&&another==POSITIVE)
+            return NEGATIVE;
+        if(this==POSITIVE&&another==NEGATIVE)
+            return POSITIVE;
+        return TOP;
     }
 
     /**
@@ -91,8 +129,15 @@ public enum ZeroAbstractValue {
      * @return the result of the merge.
      */
     public ZeroAbstractValue merge(ZeroAbstractValue another) {
-        // TODO: IMPLEMENT
-        throw new UnsupportedOperationException();
+        if(this==BOTTOM)
+            return another;
+        if(another==BOTTOM)
+            return this;
+        if(this==TOP||another==TOP)
+            return TOP;
+        if(this==another)
+            return this;
+        return TOP;
     }
 
 }
